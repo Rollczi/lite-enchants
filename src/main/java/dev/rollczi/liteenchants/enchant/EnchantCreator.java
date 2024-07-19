@@ -9,7 +9,7 @@ public interface EnchantCreator<C extends EnchantConfig> {
 
     static <C extends EnchantConfig> EnchantCreator<C> defaultCreator() {
         return (config, builder) -> builder
-            .description(config.name());
+            .description(config.getName());
     }
 
 }

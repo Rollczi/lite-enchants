@@ -15,6 +15,9 @@ import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry;
 import io.papermc.paper.registry.event.RegistryEvents;
 import io.papermc.paper.registry.event.RegistryFreezeEvent;
+import io.papermc.paper.registry.event.WritableRegistry;
+import io.papermc.paper.registry.keys.EnchantmentKeys;
+import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,8 +44,17 @@ public class LiteEnchantsBootstrap implements PluginBootstrap {
         EnchantsConfiguration configuration = configManager.load(new EnchantsConfiguration(), "enchants.yml");
 
         context.getLifecycleManager().registerEventHandler(RegistryEvents.ENCHANTMENT.freeze()
-            .newHandler(event -> Enchants.ALL_ENCHANTS.forEach(enchant -> registerEnchant(event, configuration, enchant)))
+            .newHandler(event -> registerEnchants(event, configuration, context))
         );
+    }
+
+    private void registerEnchants(RegistryFreezeEvent<Enchantment, EnchantmentRegistryEntry.Builder> event, EnchantsConfiguration configuration, BootstrapContext context) {
+        try {
+            Enchants.ALL_ENCHANTS.forEach(enchant -> registerEnchant(event, configuration, enchant));
+        }
+        catch (Exception exception) {
+            context.getLogger().error("Failed to register enchants", exception);
+        }
     }
 
     private <C extends EnchantConfig> void registerEnchant(
@@ -51,14 +63,16 @@ public class LiteEnchantsBootstrap implements PluginBootstrap {
         Enchant<C> enchant
     ) {
         C config = enchant.configProvider().apply(configuration);
-
-        event.registry().register(
+        WritableRegistry<Enchantment, EnchantmentRegistryEntry.Builder> registry = event.registry();
+        registry.register(
             enchant.key(),
-            builder -> builder.description(config.name())
+            builder -> builder
+                .description(config.getName())
                 .supportedItems(event.getOrCreateTag(enchant.supportedItems()))
+                .primaryItems(event.getOrCreateTag(enchant.supportedItems()))
                 .maxLevel(config.maxLevel())
-                .weight(config.weight())
-                .anvilCost(config.anvilCost())
+                .weight(config.getWeight())
+                .anvilCost(config.getAnvilCost())
                 .minimumCost(EnchantmentRegistryEntry.EnchantmentCost.of(1, 1))
                 .maximumCost(EnchantmentRegistryEntry.EnchantmentCost.of(3, 1))
                 .activeSlots(enchant.activeSlots())

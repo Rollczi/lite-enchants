@@ -1,48 +1,49 @@
 package dev.rollczi.liteenchants.enchant;
 
-import eu.okaeri.configs.OkaeriConfig;
 import java.util.Comparator;
 import java.util.Map;
 import net.kyori.adventure.text.Component;
 
-public abstract class LeveledEnchantConfig<L> extends OkaeriConfig implements EnchantConfig {
+public interface LeveledEnchantConfig<L> extends EnchantConfig {
 
-    public Component name;
-    public int weight = 10;
-    public int anvilCost = 5;
-
-    protected abstract Map<Integer, L> levels();
+    Map<Integer, L> getLevels();
 
     @Override
-    public Component name() {
-        return this.name;
-    }
+    Component getName();
 
     @Override
-    public int maxLevel() {
-        return this.levels().keySet().stream()
+    default int maxLevel() {
+        return this.getLevels().keySet().stream()
             .max(Comparator.naturalOrder())
             .orElseThrow(() -> new IllegalStateException("No levels found for " + this.getClass().getSimpleName()));
     }
 
-    public L level(int level) {
-        L l = this.levels().get(level);
+    default L level(int level) {
+        L currentLevel = this.getLevels().get(level);
 
-        if (l == null) {
+        if (currentLevel != null) {
+            return currentLevel;
+        }
+
+        int maxed = this.maxLevel();
+
+        if (level <= maxed) {
             throw new IllegalStateException("Missing level " + level + " for " + this.getClass().getSimpleName());
         }
 
-        return l;
+        L maxLevel = this.getLevels().get(maxed);
+
+        if (maxLevel == null) {
+            throw new IllegalStateException("Missing level " + level + " for " + this.getClass().getSimpleName() + ", using max level instead");
+        }
+
+        return maxLevel;
     }
 
     @Override
-    public int weight() {
-        return this.weight;
-    }
+    int getWeight();
 
     @Override
-    public int anvilCost() {
-        return this.anvilCost;
-    }
+    int getAnvilCost();
 
 }

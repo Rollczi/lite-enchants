@@ -27,6 +27,9 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
+
     implementation("dev.rollczi:litecommands-bukkit:${Versions.LITECOMMANDS}")
     implementation("dev.rollczi:litecommands-adventure:${Versions.LITECOMMANDS}")
 

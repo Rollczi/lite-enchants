@@ -4,12 +4,12 @@ import net.kyori.adventure.text.Component;
 
 public interface EnchantConfig {
 
-    Component name();
+    Component getName();
 
     int maxLevel();
 
-    int weight();
+    int getWeight();
 
-    int anvilCost();
+    int getAnvilCost();
 
 }

@@ -2,10 +2,14 @@ package dev.rollczi.liteenchants;
 
 import dev.rollczi.liteenchants.config.ConfigService;
 import dev.rollczi.liteenchants.config.PluginConfig;
+import dev.rollczi.liteenchants.enchant.EnchantLimitController;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
+import dev.rollczi.liteenchants.enchant.effect.EffectEnchantManager;
+import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantController;
+import dev.rollczi.liteenchants.enchant.effect.haste.HasteEffectEnchantController;
 import dev.rollczi.liteenchants.wip.EnchantmentArgument;
 import dev.rollczi.liteenchants.wip.EnchantCommand;
-import dev.rollczi.liteenchants.enchant.potion.EnchantPotionController;
+import dev.rollczi.liteenchants.enchant.potion.PotionEnchantController;
 import dev.rollczi.liteenchants.message.MessageService;
 import dev.rollczi.liteenchants.reload.ReloadManager;
 import dev.rollczi.litecommands.LiteCommands;
@@ -37,13 +41,16 @@ public class LiteEnchants extends JavaPlugin {
     public void onEnable() {
         PluginConfig pluginConfig = configManager.getConfig(PluginConfig.class);
         EnchantsConfiguration enchantsConfiguration = configManager.getConfig(EnchantsConfiguration.class);
-
         MessageService messageService = new MessageService(pluginConfig, miniMessage);
 
         PluginManager pluginManager = this.getServer().getPluginManager();
+        EffectEnchantManager effectEnchantManager = new EffectEnchantManager(this.getServer(), this);
 
         Stream.of(
-            new EnchantPotionController(enchantsConfiguration)
+            new EnchantLimitController(),
+            new PotionEnchantController(enchantsConfiguration),
+            new ArmorEffectEnchantController(enchantsConfiguration, effectEnchantManager),
+            new HasteEffectEnchantController(enchantsConfiguration, effectEnchantManager)
         ).forEach(listener -> pluginManager.registerEvents(listener, this));
 
         this.liteCommands = LiteBukkitFactory.builder("lite-enchants", this)
