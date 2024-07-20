@@ -67,7 +67,7 @@ public class LiteEnchantsBootstrap implements PluginBootstrap {
         registry.register(
             enchant.key(),
             builder -> builder
-                .description(config.getName())
+                .description(this.miniMessage.deserialize(config.getName()))
                 .supportedItems(event.getOrCreateTag(enchant.supportedItems()))
                 .primaryItems(event.getOrCreateTag(enchant.supportedItems()))
                 .maxLevel(config.maxLevel())

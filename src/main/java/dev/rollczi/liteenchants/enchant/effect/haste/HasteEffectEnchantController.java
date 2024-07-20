@@ -3,17 +3,10 @@ package dev.rollczi.liteenchants.enchant.effect.haste;
 import dev.rollczi.liteenchants.enchant.Enchants;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
 import dev.rollczi.liteenchants.enchant.effect.EffectEnchantManager;
+import dev.rollczi.liteenchants.util.ItemTypeUtil;
 import io.papermc.paper.event.player.PlayerInventorySlotChangeEvent;
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
-import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys;
-import io.papermc.paper.registry.tag.Tag;
 import java.time.Duration;
-import java.util.HashSet;
-import java.util.Set;
-import org.bukkit.Material;
-import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +14,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.PlayerInventory;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -33,19 +25,9 @@ public class HasteEffectEnchantController implements Listener {
     private final EnchantsConfiguration configuration;
     private final EffectEnchantManager manager;
 
-    private final Set<Material> pickaxes = new HashSet<>();
-
     public HasteEffectEnchantController(EnchantsConfiguration configuration, EffectEnchantManager manager) {
         this.configuration = configuration;
         this.manager = manager;
-
-        Registry<ItemType> registry = RegistryAccess.registryAccess().getRegistry(RegistryKey.ITEM);
-        Tag<ItemType> tag = registry.getTag(ItemTypeTagKeys.PICKAXES);
-
-        for (TypedKey<ItemType> itemTypeTypedKey : tag) {
-            ItemType type = registry.get(itemTypeTypedKey);
-            pickaxes.add(type.asMaterial());
-        }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -84,7 +66,7 @@ public class HasteEffectEnchantController implements Listener {
     }
 
     private void checkOldItem(Player player, ItemStack oldItemStack) {
-        if (pickaxes.contains(oldItemStack.getType())) {
+        if (ItemTypeUtil.isIncluded(oldItemStack, ItemTypeTagKeys.PICKAXES)) {
             int level = oldItemStack.getEnchantmentLevel(HASTE_ENCHANTMENT);
 
             if (level > 0) {
@@ -94,7 +76,7 @@ public class HasteEffectEnchantController implements Listener {
     }
 
     private boolean checkNewItem(Player player, ItemStack newItemStack) {
-        if (pickaxes.contains(newItemStack.getType())) {
+        if (ItemTypeUtil.isIncluded(newItemStack, ItemTypeTagKeys.PICKAXES)) {
             int level = newItemStack.getEnchantmentLevel(HASTE_ENCHANTMENT);
 
             if (level > 0) {

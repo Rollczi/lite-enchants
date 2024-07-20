@@ -1,10 +1,8 @@
 package dev.rollczi.liteenchants.enchant;
 
-import net.kyori.adventure.text.Component;
-
 public interface EnchantConfig {
 
-    Component getName();
+    String getName();
 
     int maxLevel();
 

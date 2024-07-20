@@ -8,8 +8,7 @@ public interface EnchantCreator<C extends EnchantConfig> {
     void create(C config, EnchantmentRegistryEntry.Builder builder);
 
     static <C extends EnchantConfig> EnchantCreator<C> defaultCreator() {
-        return (config, builder) -> builder
-            .description(config.getName());
+        return (config, builder) -> {};
     }
 
 }

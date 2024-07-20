@@ -2,7 +2,6 @@ package dev.rollczi.liteenchants.enchant.effect;
 
 import dev.rollczi.liteenchants.enchant.Enchant;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
-import dev.rollczi.liteenchants.enchant.AbstractLeveledEnchantConfig;
 import dev.rollczi.liteenchants.enchant.LeveledEnchantConfig;
 import io.papermc.paper.registry.tag.TagKey;
 import java.util.function.Function;

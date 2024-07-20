@@ -2,28 +2,17 @@ package dev.rollczi.liteenchants.enchant.potion;
 
 import dev.rollczi.liteenchants.enchant.EnchantLevelChanceConfig;
 import eu.okaeri.configs.OkaeriConfig;
+import lombok.Getter;
 import org.bukkit.potion.PotionEffectType;
 
-public abstract class PotionEnchantLevelConfig extends OkaeriConfig implements EnchantLevelChanceConfig {
+public  interface PotionEnchantLevelConfig extends EnchantLevelChanceConfig {
 
-    public double chance = 0.1;
-    public int duration = 20 * 5;
-    public int amplifier = 0;
+    PotionEffectType getEffect();
 
-    public PotionEnchantLevelConfig() {
-    }
+    double getChance();
 
-    public PotionEnchantLevelConfig(double chance, int duration, int amplifier) {
-        this.chance = chance;
-        this.duration = duration;
-        this.amplifier = amplifier;
-    }
+    int getDuration();
 
-    public abstract PotionEffectType getEffect();
-
-    @Override
-    public double chance() {
-        return this.chance;
-    }
+    int getAmplifier();
 
 }

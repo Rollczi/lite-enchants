@@ -9,7 +9,7 @@ public interface LeveledEnchantConfig<L> extends EnchantConfig {
     Map<Integer, L> getLevels();
 
     @Override
-    Component getName();
+    String getName();
 
     @Override
     default int maxLevel() {

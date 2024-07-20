@@ -4,10 +4,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public interface EnchantLevelChanceConfig {
 
-    double chance();
+    double getChance();
 
     default boolean randomChance() {
-        return ThreadLocalRandom.current().nextDouble() <= this.chance();
+        return ThreadLocalRandom.current().nextDouble() <= this.getChance();
     }
 
 }

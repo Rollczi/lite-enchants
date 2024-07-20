@@ -7,6 +7,7 @@ import dev.rollczi.liteenchants.enchant.LeveledEnchantConfig;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -21,7 +22,7 @@ public class PotionEnchantController implements Listener {
         this.configuration = configuration;
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     void onDamage(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player player)) {
             return;
@@ -42,7 +43,7 @@ public class PotionEnchantController implements Listener {
                     continue;
                 }
 
-                PotionEffect effect = level.getEffect().createEffect(level.duration, level.amplifier);
+                PotionEffect effect = level.getEffect().createEffect(level.getDuration(), level.getAmplifier());
 
                 victim.addPotionEffect(effect);
             }

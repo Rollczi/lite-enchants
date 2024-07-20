@@ -1,17 +1,19 @@
 package dev.rollczi.liteenchants.enchant.potion;
 
-import dev.rollczi.liteenchants.enchant.AbstractLeveledEnchantConfig;
+import dev.rollczi.liteenchants.enchant.LeveledEnchantConfig;
+import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Include;
 import java.util.Map;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.potion.PotionEffectType;
 
-@Include(AbstractLeveledEnchantConfig.class)
 @Getter
-public class PotionPoisonEnchantConfig extends AbstractLeveledEnchantConfig<PotionPoisonEnchantConfig.LevelConfig> {
+public class PotionPoisonEnchantConfig extends OkaeriConfig implements LeveledEnchantConfig<PotionPoisonEnchantConfig.LevelConfig> {
+
+    public String name = "<dark_green>Otrucie przeciwnika";
+    public int weight = 10;
+    public int anvilCost = 5;
 
     @Comment({
         "Poziom enchantu, chance to szansa od 0 do 1 (np. 0.1 to 10%, 0.55 to 55%)",
@@ -25,18 +27,20 @@ public class PotionPoisonEnchantConfig extends AbstractLeveledEnchantConfig<Poti
         4, new LevelConfig(0.9, 20 * 6, 2)
     );
 
-    public PotionPoisonEnchantConfig() {
-        super(Component.text("Poison").color(NamedTextColor.DARK_GREEN));
-    }
+    @Getter
+    public static class LevelConfig extends OkaeriConfig implements PotionEnchantLevelConfig {
 
-    @Include(PotionEnchantLevelConfig.class)
-    public static class LevelConfig extends PotionEnchantLevelConfig {
+        public double chance = 0.1;
+        public int duration = 20 * 5;
+        public int amplifier = 0;
 
         LevelConfig() {
         }
 
         public LevelConfig(double chance, int duration, int amplifier) {
-            super(chance, duration, amplifier);
+            this.chance = chance;
+            this.duration = duration;
+            this.amplifier = amplifier;
         }
 
         @Override

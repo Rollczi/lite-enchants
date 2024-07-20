@@ -1,5 +1,6 @@
 package dev.rollczi.liteenchants.enchant;
 
+import dev.rollczi.liteenchants.util.ItemTypeUtil;
 import java.util.Map;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class EnchantLimitController implements Listener {
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onEnchant(PrepareAnvilEvent event) {
         AnvilInventory inventory = event.getInventory();
         ItemStack firstItem = inventory.getFirstItem();
@@ -29,27 +30,40 @@ public class EnchantLimitController implements Listener {
             return;
         }
 
-        if (!this.isSameNamespace(storageMeta.getStoredEnchants())) {
+        for (Enchantment enchantment : storageMeta.getStoredEnchants().keySet()) {
+            if (!Enchants.isCustomEnchant(enchantment)) {
+                continue;
+            }
+
+            Enchant<?> enchant = Enchants.getEnchant(enchantment);
+
+            if (enchant == null) {
+                continue;
+            }
+
+            if (ItemTypeUtil.isIncluded(firstItem, enchant.supportedItems())) {
+                continue;
+            }
+
+            event.setResult(null);
             return;
         }
 
-        int sameNamespace = this.getSameNamespaceCount(storageMeta.getStoredEnchants());
-        int namespaceLimit = 2;
+        int firstCustomEnchantCount = this.getCustomEnchantCount(firstItem.getEnchantments());
+        int secondCustomEnchantCount = this.getCustomEnchantCount(storageMeta.getStoredEnchants());
+        int totalCustomEnchantCount = firstCustomEnchantCount + secondCustomEnchantCount;
+        int customEnchantLimit = 2;
 
-        if (sameNamespace >= namespaceLimit) {
+        if (totalCustomEnchantCount > customEnchantLimit) {
             event.setResult(null);
         }
     }
 
-    private boolean isSameNamespace(Map<Enchantment, Integer> enchantments) {
-        return getSameNamespaceCount(enchantments) > 0;
-    }
-
-    private int getSameNamespaceCount(@NotNull Map<Enchantment, Integer> enchantments) {
+    private int getCustomEnchantCount(@NotNull Map<Enchantment, Integer> enchantments) {
         int sameNamespace = 0;
 
         for (Enchantment enchantment : enchantments.keySet()) {
-            if (Enchants.isSameNamespace(enchantment)) {
+            if (Enchants.isCustomEnchant(enchantment)) {
                 sameNamespace++;
             }
         }

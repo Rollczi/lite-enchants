@@ -4,9 +4,12 @@ import dev.rollczi.liteenchants.config.ConfigService;
 import dev.rollczi.liteenchants.config.PluginConfig;
 import dev.rollczi.liteenchants.enchant.EnchantLimitController;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
+import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantController;
 import dev.rollczi.liteenchants.enchant.effect.EffectEnchantManager;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantController;
 import dev.rollczi.liteenchants.enchant.effect.haste.HasteEffectEnchantController;
+import dev.rollczi.liteenchants.enchant.regeneration.RegenerationEnchantController;
+import dev.rollczi.liteenchants.enchant.vampire.VampireEnchantController;
 import dev.rollczi.liteenchants.wip.EnchantmentArgument;
 import dev.rollczi.liteenchants.wip.EnchantCommand;
 import dev.rollczi.liteenchants.enchant.potion.PotionEnchantController;
@@ -39,9 +42,9 @@ public class LiteEnchants extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        PluginConfig pluginConfig = configManager.getConfig(PluginConfig.class);
+//        PluginConfig pluginConfig = configManager.getConfig(PluginConfig.class);
         EnchantsConfiguration enchantsConfiguration = configManager.getConfig(EnchantsConfiguration.class);
-        MessageService messageService = new MessageService(pluginConfig, miniMessage);
+//        MessageService messageService = new MessageService(pluginConfig, miniMessage);
 
         PluginManager pluginManager = this.getServer().getPluginManager();
         EffectEnchantManager effectEnchantManager = new EffectEnchantManager(this.getServer(), this);
@@ -50,7 +53,10 @@ public class LiteEnchants extends JavaPlugin {
             new EnchantLimitController(),
             new PotionEnchantController(enchantsConfiguration),
             new ArmorEffectEnchantController(enchantsConfiguration, effectEnchantManager),
-            new HasteEffectEnchantController(enchantsConfiguration, effectEnchantManager)
+            new HasteEffectEnchantController(enchantsConfiguration, effectEnchantManager),
+            new RegenerationEnchantController(enchantsConfiguration),
+            new VampireEnchantController(enchantsConfiguration),
+            new DodgeEnchantController(enchantsConfiguration)
         ).forEach(listener -> pluginManager.registerEvents(listener, this));
 
         this.liteCommands = LiteBukkitFactory.builder("lite-enchants", this)

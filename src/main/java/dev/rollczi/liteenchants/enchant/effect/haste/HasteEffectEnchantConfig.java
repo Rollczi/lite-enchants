@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 @Getter
 public class HasteEffectEnchantConfig extends OkaeriConfig implements LeveledEnchantConfig<HasteEffectEnchantConfig.Level> {
 
-    Component name = Component.text("Pospiech");
+    String name = "Pospiech";
     int weight = 10;
     int anvilCost = 5;
     Map<Integer, Level> levels = Map.of(1, new Level());

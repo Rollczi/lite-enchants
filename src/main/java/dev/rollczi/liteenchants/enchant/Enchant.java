@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemType;
 
 @SuppressWarnings("UnstableApiUsage")
 public class Enchant<CONFIG extends EnchantConfig> {
+
     private final TypedKey<Enchantment> key;
     private final TagKey<ItemType> supportedItems;
     private final EquipmentSlotGroup activeSlots;
