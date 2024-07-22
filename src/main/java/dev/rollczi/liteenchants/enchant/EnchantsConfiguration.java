@@ -2,6 +2,8 @@ package dev.rollczi.liteenchants.enchant;
 
 import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantConfig;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantConfig;
+import dev.rollczi.liteenchants.enchant.drop.DropEnchantConfig;
+import dev.rollczi.liteenchants.enchant.durability.DurabilityProtectEnchantConfig;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantFireProtectionConfig;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantSpeedConfig;
 import dev.rollczi.liteenchants.enchant.effect.haste.HasteEffectEnchantConfig;
@@ -24,6 +26,9 @@ public class EnchantsConfiguration extends OkaeriConfig {
     public VampireEnchantConfig vampire = new VampireEnchantConfig();
     public DodgeEnchantConfig dodge = new DodgeEnchantConfig();
     public CriticalEnchantConfig critical = new CriticalEnchantConfig();
+
+    public DropEnchantConfig drop = new DropEnchantConfig();
+    public DurabilityProtectEnchantConfig durabilityProtect = new DurabilityProtectEnchantConfig();
 
 }
 

@@ -2,6 +2,8 @@ package dev.rollczi.liteenchants.enchant;
 
 import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantConfig;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantConfig;
+import dev.rollczi.liteenchants.enchant.drop.DropEnchantConfig;
+import dev.rollczi.liteenchants.enchant.durability.DurabilityProtectEnchantConfig;
 import dev.rollczi.liteenchants.enchant.effect.EffectEnchant;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantFireProtectionConfig;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantSpeedConfig;
@@ -15,10 +17,6 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys;
-import static io.papermc.paper.registry.keys.tags.ItemTypeTagKeys.CHEST_ARMOR;
-import static io.papermc.paper.registry.keys.tags.ItemTypeTagKeys.HEAD_ARMOR;
-import static io.papermc.paper.registry.keys.tags.ItemTypeTagKeys.LEG_ARMOR;
-import static io.papermc.paper.registry.keys.tags.ItemTypeTagKeys.SWORDS;
 import io.papermc.paper.registry.tag.TagKey;
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -31,10 +29,10 @@ import net.kyori.adventure.key.KeyPattern;
 import org.bukkit.Registry;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlotGroup;
-import static org.bukkit.inventory.EquipmentSlotGroup.CHEST;
-import static org.bukkit.inventory.EquipmentSlotGroup.HEAD;
-import static org.bukkit.inventory.EquipmentSlotGroup.LEGS;
-import static org.bukkit.inventory.EquipmentSlotGroup.MAINHAND;
+
+import static io.papermc.paper.registry.keys.tags.ItemTypeTagKeys.*;
+import static org.bukkit.inventory.EquipmentSlotGroup.*;
+
 import org.bukkit.inventory.ItemType;
 import panda.std.Lazy;
 
@@ -62,6 +60,9 @@ public final class Enchants {
     public static final Enchant<VampireEnchantConfig> VAMPIRE = create("vampire", SWORDS, MAINHAND, config -> config.vampire);
     public static final Enchant<DodgeEnchantConfig> DODGE = create("dodge", LEG_ARMOR, LEGS, config -> config.dodge);
     public static final Enchant<CriticalEnchantConfig> CRITICAL = create("critical", SWORDS, MAINHAND, config -> config.critical);
+    public static final Enchant<DropEnchantConfig> DROP = create("drop", PICKAXES, MAINHAND, config -> config.drop);
+    public static final Enchant<DurabilityProtectEnchantConfig> DURABILITY_PROTECT = create("durability-protect", ENCHANTABLE_ARMOR, ARMOR, config -> config.durabilityProtect);
+
 
     public static final Set<Enchant<?>> ALL_ENCHANTS = allEnchants();
     private static final Map<Key, Enchant<?>> ENCHANTS_BY_KEY = ALL_ENCHANTS.stream()

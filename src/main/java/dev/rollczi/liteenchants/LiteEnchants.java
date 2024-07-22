@@ -5,6 +5,7 @@ import dev.rollczi.liteenchants.enchant.EnchantLimitController;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
 import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantController;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantController;
+import dev.rollczi.liteenchants.enchant.drop.DropEnchantController;
 import dev.rollczi.liteenchants.enchant.effect.EffectEnchantManager;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantController;
 import dev.rollczi.liteenchants.enchant.effect.haste.HasteEffectEnchantController;
@@ -42,7 +43,7 @@ public class LiteEnchants extends JavaPlugin {
     @Override
     public void onEnable() {
 //        PluginConfig pluginConfig = configManager.getConfig(PluginConfig.class);
-        EnchantsConfiguration enchantsConfiguration = configManager.getConfig(EnchantsConfiguration.class);
+        EnchantsConfiguration enchantsConfig = configManager.getConfig(EnchantsConfiguration.class);
 //        MessageService messageService = new MessageService(pluginConfig, miniMessage);
 
         PluginManager pluginManager = this.getServer().getPluginManager();
@@ -50,13 +51,14 @@ public class LiteEnchants extends JavaPlugin {
 
         Stream.of(
             new EnchantLimitController(),
-            new PotionEnchantController(enchantsConfiguration),
-            new ArmorEffectEnchantController(enchantsConfiguration, effectEnchantManager),
-            new HasteEffectEnchantController(enchantsConfiguration, effectEnchantManager),
-            new RegenerationEnchantController(enchantsConfiguration),
-            new VampireEnchantController(enchantsConfiguration),
-            new DodgeEnchantController(enchantsConfiguration),
-            new CriticalEnchantController(enchantsConfiguration)
+            new PotionEnchantController(enchantsConfig),
+            new ArmorEffectEnchantController(enchantsConfig, effectEnchantManager),
+            new HasteEffectEnchantController(enchantsConfig, effectEnchantManager),
+            new RegenerationEnchantController(enchantsConfig),
+            new VampireEnchantController(enchantsConfig),
+            new DodgeEnchantController(enchantsConfig),
+            new CriticalEnchantController(enchantsConfig),
+            new DropEnchantController(enchantsConfig)
         ).forEach(listener -> pluginManager.registerEvents(listener, this));
 
         this.liteCommands = LiteBukkitFactory.builder("lite-enchants", this)
