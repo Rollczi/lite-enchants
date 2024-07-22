@@ -1,5 +1,6 @@
 package dev.rollczi.liteenchants.enchant;
 
+import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantConfig;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantConfig;
 import dev.rollczi.liteenchants.enchant.effect.EffectEnchant;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantFireProtectionConfig;
@@ -60,6 +61,7 @@ public final class Enchants {
 
     public static final Enchant<VampireEnchantConfig> VAMPIRE = create("vampire", SWORDS, MAINHAND, config -> config.vampire);
     public static final Enchant<DodgeEnchantConfig> DODGE = create("dodge", LEG_ARMOR, LEGS, config -> config.dodge);
+    public static final Enchant<CriticalEnchantConfig> CRITICAL = create("critical", SWORDS, MAINHAND, config -> config.critical);
 
     public static final Set<Enchant<?>> ALL_ENCHANTS = allEnchants();
     private static final Map<Key, Enchant<?>> ENCHANTS_BY_KEY = ALL_ENCHANTS.stream()

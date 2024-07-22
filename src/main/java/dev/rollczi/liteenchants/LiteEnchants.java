@@ -1,9 +1,9 @@
 package dev.rollczi.liteenchants;
 
 import dev.rollczi.liteenchants.config.ConfigService;
-import dev.rollczi.liteenchants.config.PluginConfig;
 import dev.rollczi.liteenchants.enchant.EnchantLimitController;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
+import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantController;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantController;
 import dev.rollczi.liteenchants.enchant.effect.EffectEnchantManager;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantController;
@@ -13,7 +13,6 @@ import dev.rollczi.liteenchants.enchant.vampire.VampireEnchantController;
 import dev.rollczi.liteenchants.wip.EnchantmentArgument;
 import dev.rollczi.liteenchants.wip.EnchantCommand;
 import dev.rollczi.liteenchants.enchant.potion.PotionEnchantController;
-import dev.rollczi.liteenchants.message.MessageService;
 import dev.rollczi.liteenchants.reload.ReloadManager;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.adventure.LiteAdventureExtension;
@@ -56,7 +55,8 @@ public class LiteEnchants extends JavaPlugin {
             new HasteEffectEnchantController(enchantsConfiguration, effectEnchantManager),
             new RegenerationEnchantController(enchantsConfiguration),
             new VampireEnchantController(enchantsConfiguration),
-            new DodgeEnchantController(enchantsConfiguration)
+            new DodgeEnchantController(enchantsConfiguration),
+            new CriticalEnchantController(enchantsConfiguration)
         ).forEach(listener -> pluginManager.registerEvents(listener, this));
 
         this.liteCommands = LiteBukkitFactory.builder("lite-enchants", this)
