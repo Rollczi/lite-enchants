@@ -1,7 +1,10 @@
 package dev.rollczi.liteenchants.enchant;
 
+import dev.rollczi.liteenchants.config.PluginConfig;
 import dev.rollczi.liteenchants.util.ItemTypeUtil;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +15,12 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class EnchantLimitController implements Listener {
+
+    private final PluginConfig pluginConfig;
+
+    public EnchantLimitController(PluginConfig pluginConfig) {
+        this.pluginConfig = pluginConfig;
+    }
 
     @EventHandler(ignoreCancelled = true)
     public void onEnchant(PrepareAnvilEvent event) {
@@ -49,26 +58,14 @@ public class EnchantLimitController implements Listener {
             return;
         }
 
-        int firstCustomEnchantCount = this.getCustomEnchantCount(firstItem.getEnchantments());
-        int secondCustomEnchantCount = this.getCustomEnchantCount(storageMeta.getStoredEnchants());
-        int totalCustomEnchantCount = firstCustomEnchantCount + secondCustomEnchantCount;
-        int customEnchantLimit = 2;
+        Set<Enchantment> summedEnchants = new HashSet<>();
 
-        if (totalCustomEnchantCount > customEnchantLimit) {
+        summedEnchants.addAll(firstItem.getEnchantments().keySet());
+        summedEnchants.addAll(storageMeta.getStoredEnchants().keySet());
+
+        if (summedEnchants.size() > pluginConfig.enchantLimit) {
             event.setResult(null);
         }
-    }
-
-    private int getCustomEnchantCount(@NotNull Map<Enchantment, Integer> enchantments) {
-        int sameNamespace = 0;
-
-        for (Enchantment enchantment : enchantments.keySet()) {
-            if (Enchants.isCustomEnchant(enchantment)) {
-                sameNamespace++;
-            }
-        }
-
-        return sameNamespace;
     }
 
 }

@@ -1,5 +1,6 @@
 package dev.rollczi.liteenchants.enchant;
 
+import dev.rollczi.liteenchants.enchant.armorbuff.ArmorBuffEnchantConfig;
 import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantConfig;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantConfig;
 import dev.rollczi.liteenchants.enchant.drop.DropEnchantConfig;
@@ -29,6 +30,7 @@ public class EnchantsConfiguration extends OkaeriConfig {
 
     public DropEnchantConfig drop = new DropEnchantConfig();
     public DurabilityProtectEnchantConfig durabilityProtect = new DurabilityProtectEnchantConfig();
+    public ArmorBuffEnchantConfig armorBuff = new ArmorBuffEnchantConfig();
 
 }
 

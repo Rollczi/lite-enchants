@@ -6,7 +6,7 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
-@Command(name = "cxadmin")
+@Command(name = "liteenchants")
 @Permission("liteenchants.admin")
 class LiteEnchantsAdminCommand {
 

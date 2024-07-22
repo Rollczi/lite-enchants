@@ -1,28 +1,27 @@
 package dev.rollczi.liteenchants;
 
 import dev.rollczi.liteenchants.config.ConfigService;
+import dev.rollczi.liteenchants.config.PluginConfig;
 import dev.rollczi.liteenchants.enchant.EnchantLimitController;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
+import dev.rollczi.liteenchants.enchant.armorbuff.ArmorBuffEnchantController;
 import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantController;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantController;
 import dev.rollczi.liteenchants.enchant.drop.DropEnchantController;
+import dev.rollczi.liteenchants.enchant.durability.DurabilityProtectEnchantController;
 import dev.rollczi.liteenchants.enchant.effect.EffectEnchantManager;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantController;
 import dev.rollczi.liteenchants.enchant.effect.haste.HasteEffectEnchantController;
 import dev.rollczi.liteenchants.enchant.regeneration.RegenerationEnchantController;
 import dev.rollczi.liteenchants.enchant.vampire.VampireEnchantController;
-import dev.rollczi.liteenchants.wip.EnchantmentArgument;
-import dev.rollczi.liteenchants.wip.EnchantCommand;
 import dev.rollczi.liteenchants.enchant.potion.PotionEnchantController;
 import dev.rollczi.liteenchants.reload.ReloadManager;
 import dev.rollczi.litecommands.LiteCommands;
 import dev.rollczi.litecommands.adventure.LiteAdventureExtension;
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
-import dev.rollczi.litecommands.bukkit.LiteBukkitMessages;
 import java.util.stream.Stream;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,15 +41,14 @@ public class LiteEnchants extends JavaPlugin {
 
     @Override
     public void onEnable() {
-//        PluginConfig pluginConfig = configManager.getConfig(PluginConfig.class);
+        PluginConfig pluginConfig = configManager.getConfig(PluginConfig.class);
         EnchantsConfiguration enchantsConfig = configManager.getConfig(EnchantsConfiguration.class);
-//        MessageService messageService = new MessageService(pluginConfig, miniMessage);
 
         PluginManager pluginManager = this.getServer().getPluginManager();
         EffectEnchantManager effectEnchantManager = new EffectEnchantManager(this.getServer(), this);
 
         Stream.of(
-            new EnchantLimitController(),
+            new EnchantLimitController(pluginConfig),
             new PotionEnchantController(enchantsConfig),
             new ArmorEffectEnchantController(enchantsConfig, effectEnchantManager),
             new HasteEffectEnchantController(enchantsConfig, effectEnchantManager),
@@ -58,7 +56,9 @@ public class LiteEnchants extends JavaPlugin {
             new VampireEnchantController(enchantsConfig),
             new DodgeEnchantController(enchantsConfig),
             new CriticalEnchantController(enchantsConfig),
-            new DropEnchantController(enchantsConfig)
+            new DropEnchantController(enchantsConfig),
+            new DurabilityProtectEnchantController(enchantsConfig),
+            new ArmorBuffEnchantController(enchantsConfig)
         ).forEach(listener -> pluginManager.registerEvents(listener, this));
 
         this.liteCommands = LiteBukkitFactory.builder("lite-enchants", this)
@@ -67,13 +67,7 @@ public class LiteEnchants extends JavaPlugin {
                 .colorizeArgument(true)
             )
 
-            .commands(
-                new LiteEnchantsAdminCommand(reloadManager),
-                new EnchantCommand()
-            )
-
-            .argument(Enchantment.class, new EnchantmentArgument())
-            .message(LiteBukkitMessages.PLAYER_ONLY, "&cOnly player can execute this command!")
+            .commands(new LiteEnchantsAdminCommand(reloadManager))
 
             .build();
     }

@@ -1,5 +1,6 @@
 package dev.rollczi.liteenchants.enchant.durability;
 
+import dev.rollczi.liteenchants.enchant.EnchantLevelChanceConfig;
 import dev.rollczi.liteenchants.enchant.LeveledEnchantConfig;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
@@ -23,13 +24,18 @@ public class DurabilityProtectEnchantConfig extends OkaeriConfig implements Leve
     );
 
     @Getter
-    public static class Level extends OkaeriConfig {
-        double durabilityProtect = 0.20;
+    public static class Level extends OkaeriConfig implements EnchantLevelChanceConfig {
+        double durabilityProtection = 0.20;
 
         Level() {}
 
-        Level(double durabilityProtect) {
-            this.durabilityProtect = durabilityProtect;
+        Level(double durabilityProtection) {
+            this.durabilityProtection = durabilityProtection;
+        }
+
+        @Override
+        public double getChance() {
+            return durabilityProtection;
         }
     }
 

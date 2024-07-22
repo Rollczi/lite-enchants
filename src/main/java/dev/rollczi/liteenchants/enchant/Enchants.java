@@ -1,5 +1,6 @@
 package dev.rollczi.liteenchants.enchant;
 
+import dev.rollczi.liteenchants.enchant.armorbuff.ArmorBuffEnchantConfig;
 import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantConfig;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantConfig;
 import dev.rollczi.liteenchants.enchant.drop.DropEnchantConfig;
@@ -62,6 +63,7 @@ public final class Enchants {
     public static final Enchant<CriticalEnchantConfig> CRITICAL = create("critical", SWORDS, MAINHAND, config -> config.critical);
     public static final Enchant<DropEnchantConfig> DROP = create("drop", PICKAXES, MAINHAND, config -> config.drop);
     public static final Enchant<DurabilityProtectEnchantConfig> DURABILITY_PROTECT = create("durability-protect", ENCHANTABLE_ARMOR, ARMOR, config -> config.durabilityProtect);
+    public static final Enchant<ArmorBuffEnchantConfig> ARMOR_BUFF = create("armor-buff", ENCHANTABLE_ARMOR, ARMOR, config -> config.armorBuff);
 
 
     public static final Set<Enchant<?>> ALL_ENCHANTS = allEnchants();
