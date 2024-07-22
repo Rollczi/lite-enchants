@@ -29,6 +29,10 @@ public class RegenerationEnchantController implements Listener {
             return;
         }
 
+        if (!(event.getDamager() instanceof Player)) {
+            return;
+        }
+
         ItemStack stack = player.getInventory().getItem(EquipmentSlot.CHEST);
 
         if (stack.isEmpty()) {

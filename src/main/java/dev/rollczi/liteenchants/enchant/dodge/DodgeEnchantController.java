@@ -2,7 +2,6 @@ package dev.rollczi.liteenchants.enchant.dodge;
 
 import dev.rollczi.liteenchants.enchant.Enchants;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,7 +24,7 @@ public class DodgeEnchantController implements Listener {
             return;
         }
 
-        if (!(event.getDamager() instanceof LivingEntity)) {
+        if (!(event.getDamager() instanceof Player)) {
             return;
         }
 

@@ -31,7 +31,7 @@ public class VampireEnchantController implements Listener {
             return;
         }
 
-        if (!(event.getEntity() instanceof LivingEntity)) {
+        if (!(event.getEntity() instanceof Player)) {
             return;
         }
 
