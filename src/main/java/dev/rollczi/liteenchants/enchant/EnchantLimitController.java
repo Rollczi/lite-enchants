@@ -3,8 +3,9 @@ package dev.rollczi.liteenchants.enchant;
 import dev.rollczi.liteenchants.config.PluginConfig;
 import dev.rollczi.liteenchants.util.ItemTypeUtil;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,7 +13,6 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.jetbrains.annotations.NotNull;
 
 public class EnchantLimitController implements Listener {
 
@@ -35,37 +35,48 @@ public class EnchantLimitController implements Listener {
             return;
         }
 
-        if (!(secondItem.getItemMeta() instanceof EnchantmentStorageMeta storageMeta)) {
+        Set<Enchantment> customEnchantments = this.getCustomEnchantments(secondItem);
+
+        if (secondItem.getType() == Material.ENCHANTED_BOOK) {
+            for (Enchantment enchantment : customEnchantments) {
+                Enchant<?> enchant = Enchants.getEnchant(enchantment);
+
+                if (enchant == null) {
+                    continue;
+                }
+
+                if (ItemTypeUtil.isIncluded(firstItem, enchant.supportedItems())) {
+                    continue;
+                }
+
+                event.setResult(null);
+                return;
+            }
+        }
+
+        if (customEnchantments.isEmpty()) {
             return;
         }
 
-        for (Enchantment enchantment : storageMeta.getStoredEnchants().keySet()) {
-            if (!Enchants.isCustomEnchant(enchantment)) {
-                continue;
-            }
+        customEnchantments.addAll(this.getCustomEnchantments(firstItem));
 
-            Enchant<?> enchant = Enchants.getEnchant(enchantment);
-
-            if (enchant == null) {
-                continue;
-            }
-
-            if (ItemTypeUtil.isIncluded(firstItem, enchant.supportedItems())) {
-                continue;
-            }
-
-            event.setResult(null);
-            return;
-        }
-
-        Set<Enchantment> summedEnchants = new HashSet<>();
-
-        summedEnchants.addAll(firstItem.getEnchantments().keySet());
-        summedEnchants.addAll(storageMeta.getStoredEnchants().keySet());
-
-        if (summedEnchants.size() > pluginConfig.enchantLimit) {
+        if (customEnchantments.size() > pluginConfig.enchantLimit) {
             event.setResult(null);
         }
+    }
+
+    private Set<Enchantment> getCustomEnchantments(ItemStack item) {
+        if (item.getItemMeta() instanceof EnchantmentStorageMeta storageMeta) {
+            return storageMeta.getStoredEnchants().keySet()
+                .stream()
+                .filter(enchantment -> Enchants.isCustomEnchant(enchantment))
+                .collect(Collectors.toCollection(() -> new HashSet<>()));
+        }
+
+        return item.getEnchantments().keySet()
+            .stream()
+            .filter(enchantment -> Enchants.isCustomEnchant(enchantment))
+            .collect(Collectors.toCollection(() -> new HashSet<>()));
     }
 
 }

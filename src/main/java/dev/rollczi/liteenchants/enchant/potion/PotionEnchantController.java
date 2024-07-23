@@ -33,9 +33,10 @@ public class PotionEnchantController implements Listener {
         }
 
         ItemStack item = player.getInventory().getItem(EquipmentSlot.HAND);
-        int enchantmentLevel = item.getEnchantmentLevel(Enchants.POISON.toEnchantment());
 
         for (Enchant<? extends LeveledEnchantConfig<? extends PotionEnchantLevelConfig>> enchant : Enchants.POTION_ENCHANTS) {
+            int enchantmentLevel = item.getEnchantmentLevel(enchant.toEnchantment());
+
             if (enchantmentLevel > 0) {
                 PotionEnchantLevelConfig level = enchant.config(configuration).level(enchantmentLevel);
 

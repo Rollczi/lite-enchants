@@ -18,7 +18,7 @@ public class ArmorBuffEnchantConfig extends OkaeriConfig implements LeveledEncha
     })
     public Map<Integer, Level> levels = Map.of(
         1, new Level(0.10),
-        2, new Level(0.25)
+        2, new Level(0.15)
     );
 
     @Getter

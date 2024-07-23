@@ -51,6 +51,10 @@ public class RegenerationEnchantController implements Listener {
 
         RegenerationEnchantConfig.Level config = Enchants.REGENERATION.config(configuration).level(level);
 
+        if (!config.randomChance()) {
+            return;
+        }
+
         player.addPotionEffect(PotionEffectType.REGENERATION.createEffect(config.duration, config.amplifier));
     }
 

@@ -20,7 +20,8 @@ public class DurabilityProtectEnchantConfig extends OkaeriConfig implements Leve
     })
     public Map<Integer, Level> levels = Map.of(
         1, new Level(0.20),
-        2, new Level(0.40)
+        2, new Level(0.40),
+        3, new Level(1.00)
     );
 
     @Getter

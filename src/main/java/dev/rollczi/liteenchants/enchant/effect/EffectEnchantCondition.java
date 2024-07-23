@@ -12,17 +12,19 @@ record EffectEnchantCondition(
     UUID playerUuid,
     Enchantment enchantment,
     Function<Player, Boolean> condition,
-    long ticks,
+    long duration,
     PotionEffectType effect,
     int amplifier
 ) {
+
+    public static final int DURATION_BUFFER = 10;
 
     public boolean canNotApply(Player player) {
         return !condition.apply(player);
     }
 
     public @NotNull PotionEffect createEffect() {
-        return new PotionEffect(effect, (int) (ticks + 10), amplifier);
+        return new PotionEffect(effect, (int) (duration + DURATION_BUFFER), amplifier);
     }
 
 }

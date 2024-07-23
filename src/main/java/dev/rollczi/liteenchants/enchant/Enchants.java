@@ -51,9 +51,9 @@ public final class Enchants {
     public static final String NAMESPACE = "liteenchants";
 
     public static final EffectEnchant<ArmorEffectEnchantFireProtectionConfig> FIRE_PROTECTION = new EffectEnchant<>("fire-protection", HEAD_ARMOR, HEAD, config -> config.fireProtection);
-    public static final EffectEnchant<HasteEffectEnchantConfig> HASTE = new EffectEnchant<>("haste", ItemTypeTagKeys.ENCHANTABLE_DURABILITY, MAINHAND, config -> config.haste);
+    public static final EffectEnchant<HasteEffectEnchantConfig> HASTE = new EffectEnchant<>("haste", PICKAXES, MAINHAND, config -> config.haste);
     public static final Enchant<RegenerationEnchantConfig> REGENERATION = create("regeneration", CHEST_ARMOR, CHEST, config -> config.regeneration);
-    public static final EffectEnchant<ArmorEffectEnchantSpeedConfig> SPEED = new EffectEnchant<>("speed", CHEST_ARMOR, CHEST, config -> config.speed);
+    public static final EffectEnchant<ArmorEffectEnchantSpeedConfig> SPEED = new EffectEnchant<>("speed", FOOT_ARMOR, FEET, config -> config.speed);
 
     public static final Enchant<PotionPoisonEnchantConfig> POISON = create("poison", SWORDS, MAINHAND, config -> config.poison);
     public static final Enchant<PotionSlownessEnchantConfig> SLOWNESS = create("slowness", SWORDS, MAINHAND, config -> config.slowness);

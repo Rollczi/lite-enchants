@@ -11,6 +11,7 @@ import org.bukkit.Server;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
 
 public class EffectEnchantManager {
 
@@ -67,14 +68,16 @@ public class EffectEnchantManager {
                     return;
                 }
 
-                player.addPotionEffect(condition.createEffect());
+                if (this.canModifyEffect(player, condition)) {
+                    player.addPotionEffect(condition.createEffect());
+                }
             }
             catch (Exception exception) {
                 exception.printStackTrace();
             }
 
             this.nextCycle(conditionId);
-        }, condition.ticks());
+        }, condition.duration());
     }
 
     public void stopListener(UUID playerUuid, Enchantment enchantment) {
@@ -97,29 +100,51 @@ public class EffectEnchantManager {
 
         Player player = server.getPlayer(playerUuid);
 
-        if (player != null) {
+        if (player != null && this.canModifyEffect(player, enchantCondition)) {
             player.removePotionEffect(enchantCondition.effect());
         }
     }
 
-    public void stopAllListeners(UUID player) {
-        Set<UUID> conditions = this.conditionsByPlayer.remove(player);
+    public void stopAllListeners(UUID playerUuid) {
+        Set<UUID> conditions = this.conditionsByPlayer.remove(playerUuid);
 
         if (conditions == null) {
             return;
         }
 
-        Player playerInstance = server.getPlayer(player);
+        Player player = server.getPlayer(playerUuid);
 
         for (UUID condition : conditions) {
             EffectEnchantCondition enchantCondition = this.conditions.remove(condition);
             this.conditionsByEnchantment.remove(enchantCondition.enchantment());
 
-            if (playerInstance != null) {
-                playerInstance.removePotionEffect(enchantCondition.effect());
+            if (player != null && this.canModifyEffect(player, enchantCondition)) {
+                player.removePotionEffect(enchantCondition.effect());
             }
         }
 
+    }
+
+    private boolean canModifyEffect(Player player, EffectEnchantCondition condition) {
+        PotionEffect potionEffect = player.getPotionEffect(condition.effect());
+
+        if (potionEffect == null) {
+            return true;
+        }
+
+        if (potionEffect.isInfinite()) {
+            return false;
+        }
+
+        if (potionEffect.getAmplifier() > condition.amplifier()) {
+            return false;
+        }
+
+        if (potionEffect.getDuration() > condition.duration() + EffectEnchantCondition.DURATION_BUFFER) {
+            return false;
+        }
+
+        return true;
     }
 
 }

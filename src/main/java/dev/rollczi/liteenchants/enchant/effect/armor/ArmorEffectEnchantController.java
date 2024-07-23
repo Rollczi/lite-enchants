@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
@@ -53,11 +52,6 @@ public class ArmorEffectEnchantController implements Listener {
                 manager.stopListener(player.getUniqueId(), enchant.toEnchantment());
             }
         }
-    }
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    void onQuit(PlayerQuitEvent event) {
-        manager.stopAllListeners(event.getPlayer().getUniqueId());
     }
 
     private EquipmentSlot toEquipmentSlot(PlayerArmorChangeEvent.SlotType type) {

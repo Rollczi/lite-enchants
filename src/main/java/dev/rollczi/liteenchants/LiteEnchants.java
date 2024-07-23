@@ -3,12 +3,14 @@ package dev.rollczi.liteenchants;
 import dev.rollczi.liteenchants.config.ConfigService;
 import dev.rollczi.liteenchants.config.PluginConfig;
 import dev.rollczi.liteenchants.enchant.EnchantLimitController;
+import dev.rollczi.liteenchants.enchant.EnchantmentArgument;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
 import dev.rollczi.liteenchants.enchant.armorbuff.ArmorBuffEnchantController;
 import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantController;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantController;
 import dev.rollczi.liteenchants.enchant.drop.DropEnchantController;
 import dev.rollczi.liteenchants.enchant.durability.DurabilityProtectEnchantController;
+import dev.rollczi.liteenchants.enchant.effect.EffectEnchantController;
 import dev.rollczi.liteenchants.enchant.effect.EffectEnchantManager;
 import dev.rollczi.liteenchants.enchant.effect.armor.ArmorEffectEnchantController;
 import dev.rollczi.liteenchants.enchant.effect.haste.HasteEffectEnchantController;
@@ -22,6 +24,7 @@ import dev.rollczi.litecommands.bukkit.LiteBukkitFactory;
 import java.util.stream.Stream;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -50,6 +53,7 @@ public class LiteEnchants extends JavaPlugin {
         Stream.of(
             new EnchantLimitController(pluginConfig),
             new PotionEnchantController(enchantsConfig),
+            new EffectEnchantController(effectEnchantManager),
             new ArmorEffectEnchantController(enchantsConfig, effectEnchantManager),
             new HasteEffectEnchantController(enchantsConfig, effectEnchantManager),
             new RegenerationEnchantController(enchantsConfig),
@@ -68,6 +72,7 @@ public class LiteEnchants extends JavaPlugin {
             )
 
             .commands(new LiteEnchantsAdminCommand(reloadManager))
+            .argument(Enchantment.class, new EnchantmentArgument())
 
             .build();
     }
