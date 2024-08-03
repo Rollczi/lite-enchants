@@ -4,6 +4,7 @@ import dev.rollczi.liteenchants.enchant.LeveledEnchantConfig;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Include;
+import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import org.bukkit.potion.PotionEffectType;
@@ -11,9 +12,10 @@ import org.bukkit.potion.PotionEffectType;
 @Getter
 public class PotionPoisonEnchantConfig extends OkaeriConfig implements LeveledEnchantConfig<PotionPoisonEnchantConfig.LevelConfig> {
 
-    public String name = "<dark_green>Otrucie przeciwnika";
-    public int weight = 10;
-    public int anvilCost = 5;
+    String name = "<dark_green>Otrucie przeciwnika";
+    List<String> lore = List.of();
+    int weight = 10;
+    int anvilCost = 5;
 
     @Comment({
         "Poziom enchantu, chance to szansa od 0 do 1 (np. 0.1 to 10%, 0.55 to 55%)",

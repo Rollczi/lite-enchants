@@ -71,7 +71,7 @@ public class LiteEnchants extends JavaPlugin {
                 .colorizeArgument(true)
             )
 
-            .commands(new LiteEnchantsAdminCommand(reloadManager))
+            .commands(new LiteEnchantsAdminCommand(reloadManager, enchantsConfig, miniMessage))
             .argument(Enchantment.class, new EnchantmentArgument())
 
             .build();

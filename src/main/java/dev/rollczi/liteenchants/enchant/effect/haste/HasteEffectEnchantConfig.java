@@ -3,6 +3,7 @@ package dev.rollczi.liteenchants.enchant.effect.haste;
 import dev.rollczi.liteenchants.enchant.LeveledEnchantConfig;
 import dev.rollczi.liteenchants.enchant.effect.EffectEnchantLevel;
 import eu.okaeri.configs.OkaeriConfig;
+import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
@@ -12,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 public class HasteEffectEnchantConfig extends OkaeriConfig implements LeveledEnchantConfig<HasteEffectEnchantConfig.Level> {
 
     String name = "Pospiech";
+    List<String> lore = List.of();
     int weight = 10;
     int anvilCost = 5;
     Map<Integer, Level> levels = Map.of(1, new Level());

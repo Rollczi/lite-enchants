@@ -4,15 +4,17 @@ import dev.rollczi.liteenchants.enchant.EnchantLevelChanceConfig;
 import dev.rollczi.liteenchants.enchant.LeveledEnchantConfig;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 
 @Getter
 public class VampireEnchantConfig extends OkaeriConfig implements LeveledEnchantConfig<VampireEnchantConfig.Level> {
 
-    public String name = "<gradient:#9a262a:#27222a>Wampiryzm</gradient>";
-    public int weight = 10;
-    public int anvilCost = 5;
+    String name = "<gradient:#9a262a:#27222a>Wampiryzm</gradient>";
+    List<String> lore = List.of();
+    int weight = 10;
+    int anvilCost = 5;
 
     @Comment("healthRegenMultiplier - Jaki % hp ma zostać przywrócony do gracza. Jeśli gracz zada 12hp a multipler jest ustawiony na 0.5 to gracz może odzyskać 6hp")
     public Map<Integer, Level> levels = Map.of(

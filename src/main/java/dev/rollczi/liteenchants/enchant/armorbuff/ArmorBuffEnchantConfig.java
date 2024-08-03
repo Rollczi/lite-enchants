@@ -3,6 +3,7 @@ package dev.rollczi.liteenchants.enchant.armorbuff;
 import dev.rollczi.liteenchants.enchant.LeveledEnchantConfig;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 
@@ -10,6 +11,7 @@ import lombok.Getter;
 public class ArmorBuffEnchantConfig extends OkaeriConfig implements LeveledEnchantConfig<ArmorBuffEnchantConfig.Level> {
 
     String name = "Wzmocnienie pancerza";
+    List<String> lore = List.of();
     int weight = 10;
     int anvilCost = 5;
 

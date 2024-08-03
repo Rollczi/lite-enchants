@@ -4,6 +4,7 @@ import dev.rollczi.liteenchants.enchant.EnchantLevelChanceConfig;
 import dev.rollczi.liteenchants.enchant.LeveledEnchantConfig;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import java.util.List;
 import lombok.Getter;
 
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Map;
 public class DurabilityProtectEnchantConfig extends OkaeriConfig implements LeveledEnchantConfig<DurabilityProtectEnchantConfig.Level> {
 
     String name = "Niepodatność";
+    List<String> lore = List.of();
     int weight = 10;
     int anvilCost = 5;
 
