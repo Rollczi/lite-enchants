@@ -1,6 +1,3 @@
-import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
-import net.minecrell.pluginyml.paper.PaperPluginDescription
-
 plugins {
     id("java")
     id("io.github.goooler.shadow") version "8.1.8"
@@ -9,7 +6,7 @@ plugins {
 }
 
 group = "dev.rollczi"
-version = "1.0.0-SNAPSHOT"
+version = "1.1.0-SNAPSHOT"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
