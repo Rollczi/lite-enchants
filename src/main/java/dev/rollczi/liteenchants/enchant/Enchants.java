@@ -1,5 +1,6 @@
 package dev.rollczi.liteenchants.enchant;
 
+import dev.rollczi.litecommands.shared.Lazy;
 import dev.rollczi.liteenchants.enchant.armorbuff.ArmorBuffEnchantConfig;
 import dev.rollczi.liteenchants.enchant.critical.CriticalEnchantConfig;
 import dev.rollczi.liteenchants.enchant.dodge.DodgeEnchantConfig;
@@ -17,7 +18,6 @@ import dev.rollczi.liteenchants.enchant.vampire.VampireEnchantConfig;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
-import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys;
 import io.papermc.paper.registry.tag.TagKey;
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -35,11 +35,10 @@ import static io.papermc.paper.registry.keys.tags.ItemTypeTagKeys.*;
 import static org.bukkit.inventory.EquipmentSlotGroup.*;
 
 import org.bukkit.inventory.ItemType;
-import panda.std.Lazy;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class Enchants {
-;
+
     private final static Lazy<Registry<Enchantment>> REGISTRY = new Lazy<>(() -> RegistryAccess
         .registryAccess()
         .getRegistry(RegistryKey.ENCHANTMENT)
