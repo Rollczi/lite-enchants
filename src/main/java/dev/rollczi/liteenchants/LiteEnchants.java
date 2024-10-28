@@ -3,6 +3,7 @@ package dev.rollczi.liteenchants;
 import dev.rollczi.liteenchants.config.ConfigService;
 import dev.rollczi.liteenchants.config.PluginConfig;
 import dev.rollczi.liteenchants.enchant.EnchantLimitController;
+import dev.rollczi.liteenchants.enchant.EnchantRemoveCommand;
 import dev.rollczi.liteenchants.enchant.EnchantmentArgument;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
 import dev.rollczi.liteenchants.enchant.armorbuff.ArmorBuffEnchantController;
@@ -71,7 +72,10 @@ public class LiteEnchants extends JavaPlugin {
                 .colorizeArgument(true)
             )
 
-            .commands(new LiteEnchantsAdminCommand(reloadManager, enchantsConfig, miniMessage))
+            .commands(
+                new LiteEnchantsAdminCommand(reloadManager, enchantsConfig, miniMessage),
+                new EnchantRemoveCommand(pluginConfig, miniMessage)
+            )
             .argument(Enchantment.class, new EnchantmentArgument())
 
             .build();

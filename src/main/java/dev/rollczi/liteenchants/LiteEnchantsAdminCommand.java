@@ -1,7 +1,6 @@
 package dev.rollczi.liteenchants;
 
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.context.Context;
 import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.liteenchants.enchant.EnchantConfig;
 import dev.rollczi.liteenchants.enchant.Enchants;
@@ -12,14 +11,12 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import java.util.List;
-import java.util.stream.Collectors;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;

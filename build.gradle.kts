@@ -17,15 +17,15 @@ java {
 
 repositories {
     mavenCentral()
+    maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.panda-lang.org/releases/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.eternalcode.pl/releases")
     maven("https://storehouse.okaeri.eu/repository/maven-public/")
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
 
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")

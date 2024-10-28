@@ -1,8 +1,11 @@
 package dev.rollczi.liteenchants.enchant.drop;
 
+import com.destroystokyo.paper.MaterialTags;
 import dev.rollczi.liteenchants.enchant.Enchants;
 import dev.rollczi.liteenchants.enchant.EnchantsConfiguration;
 import java.util.concurrent.ThreadLocalRandom;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +17,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class DropEnchantController implements Listener {
 
@@ -25,16 +29,8 @@ public class DropEnchantController implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     void onBLockBreak(BlockBreakEvent event) {
-        Player player = event.getPlayer();
-        ItemStack stack = player.getInventory().getItem(EquipmentSlot.HAND);
-
-        if (stack.isEmpty()) {
-            return;
-        }
-
-        int level = stack.getEnchantmentLevel(Enchants.DROP.toEnchantment());
-
-        if (level == 0) {
+        Integer level = this.getLevel(event.getBlock(), event.getPlayer());
+        if (level == null) {
             return;
         }
 
@@ -54,16 +50,8 @@ public class DropEnchantController implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     void onBlockBreak(BlockDropItemEvent event) {
-        Player player = event.getPlayer();
-        ItemStack stack = player.getInventory().getItem(EquipmentSlot.HAND);
-
-        if (stack.isEmpty()) {
-            return;
-        }
-
-        int level = stack.getEnchantmentLevel(Enchants.DROP.toEnchantment());
-
-        if (level == 0) {
+        Integer level = this.getLevel(event.getBlock(), event.getPlayer());
+        if (level == null) {
             return;
         }
 
@@ -85,6 +73,30 @@ public class DropEnchantController implements Listener {
 
             itemStack.setAmount(amount);
         }
+    }
+
+    @Nullable
+    private Integer getLevel(Block block, Player player) {
+        if (!this.isOre(block)) {
+            return null;
+        }
+
+        ItemStack stack = player.getInventory().getItem(EquipmentSlot.HAND);
+
+        if (stack.isEmpty()) {
+            return null;
+        }
+
+        int level = stack.getEnchantmentLevel(Enchants.DROP.toEnchantment());
+
+        if (level == 0) {
+            return null;
+        }
+        return level;
+    }
+
+    private boolean isOre(Block block) {
+        return MaterialTags.ORES.isTagged(block);
     }
 
 }
