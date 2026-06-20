@@ -1,6 +1,6 @@
 object Versions {
     // core
-    const val LITECOMMANDS = "3.8.0"
+    const val LITECOMMANDS = "3.11.0"
     const val OKAERI_CONFIGS = "5.0.2"
 
     // Testing
